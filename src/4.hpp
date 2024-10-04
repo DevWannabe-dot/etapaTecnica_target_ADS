@@ -1,3 +1,5 @@
+// Exercicio 04, execute somente o main.cpp
+
 #pragma once
 #ifndef __4_h__
 #define __4_h__

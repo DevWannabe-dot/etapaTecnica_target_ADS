@@ -26,10 +26,10 @@ float get_min_valor(const std::vector<dia_valor_t>& dados)
     float valor_min = std::numeric_limits<float>::max();
 
     for(const auto& entrada : dados){
-        valor_min = (entrada.valor < valor_min ? entrada.valor : valor_min);
+        valor_min = (entrada.valor < valor_min && entrada.valor != 0 ? entrada.valor : valor_min);
     }
 
-    return valor_min;
+    return valor_min;   
 }
 
 float get_max_valor(const std::vector<dia_valor_t>& dados)
@@ -49,8 +49,10 @@ int get_acimaMedia(const std::vector<dia_valor_t>& dados)
     int n = 0;
 
     for(const auto& entrada : dados){
-        n++;
-        soma += entrada.valor;
+        if(entrada.valor != 0){
+            n++;
+            soma += entrada.valor;
+        }
     }
 
     media = soma/n;
@@ -69,7 +71,7 @@ void ex03()
     std::ifstream dados_arq("dados/dados.json", std::ifstream::binary);
 
     if(!dados_arq.is_open()){
-        std::cerr << "<Erro ao abrir o arquivo json.>" << std::endl;
+        std::cerr << "<Erro ao abrir o arquivo JSON.>" << std::endl;
         return;
     }
 
@@ -78,7 +80,7 @@ void ex03()
     Json::CharReaderBuilder builder;
     std::string errs;
     if (!Json::parseFromStream(builder, dados_arq, &root, &errs)) {
-        std::cerr << "Erro ao ler o JSON: " << errs << std::endl;
+        std::cerr << "<Erro ao ler o JSON.>" << errs << std::endl;
         return;
     }
     for(const auto& item : root){
